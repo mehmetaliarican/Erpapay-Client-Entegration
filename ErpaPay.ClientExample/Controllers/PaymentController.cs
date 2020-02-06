@@ -30,11 +30,12 @@ namespace ErpaPay.ClientExample.Controllers
         [Route("odeme_yap")]
         public async Task<IActionResult> DoPayment()
         {
+            double amount = 12.5;
             using (HttpClient client = new HttpClient())
             {
                 var request = new PaymentRequestModel
                 {
-                    Amount = Convert.ToDecimal("12.5",new CultureInfo("tr-TR")),
+                    Amount = Convert.ToDecimal(amount,new CultureInfo("en-US")),
                     BackrefUrl = "http://localhost:57837/getresponse",
                     BasketId = "123456",
                     CardExpireMonth = "12",
