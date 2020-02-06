@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -30,12 +29,11 @@ namespace ErpaPay.ClientExample.Controllers
         [Route("odeme_yap")]
         public async Task<IActionResult> DoPayment()
         {
-            double amount = 12.5;
             using (HttpClient client = new HttpClient())
             {
                 var request = new PaymentRequestModel
                 {
-                    Amount = Convert.ToDecimal(amount,new CultureInfo("en-US")),
+                    Amount = 12.5,
                     BackrefUrl = "http://localhost:57837/getresponse",
                     BasketId = "123456",
                     CardExpireMonth = "12",
@@ -54,6 +52,7 @@ namespace ErpaPay.ClientExample.Controllers
                     TransactionTime = ((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds).ToString()
                 };
                 request.Signature = SHA512_ComputeHash(this.SecretKey + this.MerchantId + request.TransactionId + request.TransactionTime + request.Amount + request.Currency + request.Installment + request.CardNumber, this.SecretKey);
+
 
                 var jsonContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
 

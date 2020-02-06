@@ -17,7 +17,7 @@ namespace ErpaPay.ClientExample.Models
         public string Description { get; set; }
         public string BasketId { get; set; }
         public string PaymentChannel { get; set; }
-        public decimal Amount { get; set; }
+        public double Amount { get; set; }
         public string CardNumber { get; set; }
         public string CardExpireMonth { get; set; }
         public string CardExpireYear { get; set; }
