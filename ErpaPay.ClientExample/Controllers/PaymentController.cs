@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ErpaPay.ClientExample.Models;
@@ -32,7 +34,7 @@ namespace ErpaPay.ClientExample.Controllers
             {
                 var request = new PaymentRequestModel
                 {
-                    Amount = 12.5M,
+                    Amount = Convert.ToDecimal("12.5",new CultureInfo("tr-TR")),
                     BackrefUrl = "http://localhost:57837/getresponse",
                     BasketId = "123456",
                     CardExpireMonth = "12",
@@ -51,7 +53,6 @@ namespace ErpaPay.ClientExample.Controllers
                     TransactionTime = ((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds).ToString()
                 };
                 request.Signature = SHA512_ComputeHash(this.SecretKey + this.MerchantId + request.TransactionId + request.TransactionTime + request.Amount + request.Currency + request.Installment + request.CardNumber, this.SecretKey);
-
 
                 var jsonContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
 
