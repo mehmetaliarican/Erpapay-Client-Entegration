@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -51,7 +52,7 @@ namespace ErpaPay.ClientExample.Controllers
                     TransactionId = Guid.NewGuid().ToString(),
                     TransactionTime = ((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds).ToString()
                 };
-                request.Signature = SHA512_ComputeHash(this.SecretKey + this.MerchantId + request.TransactionId + request.TransactionTime + request.Amount + request.Currency + request.Installment + request.CardNumber, this.SecretKey);
+                request.Signature = SHA512_ComputeHash(this.SecretKey + this.MerchantId + request.TransactionId + request.TransactionTime + request.Amount.ToString(new CultureInfo("en-US")) + request.Currency + request.Installment + request.CardNumber, this.SecretKey);
 
 
                 var jsonContent = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
@@ -78,7 +79,7 @@ namespace ErpaPay.ClientExample.Controllers
                 var response = await client.PostAsync(completeUrl, content);
                 var responseContent = await response.Content.ReadAsStringAsync();
                 var responseObj = JsonSerializer.Deserialize<CompleteResponseModel>(responseContent);
-                return View("PaymentResult",responseObj);
+                return View("PaymentResult", responseObj);
             }
         }
 
