@@ -1,0 +1,15 @@
+﻿@model ErpaPay.ClientExample.Models.PaymentResponseModel
+@{
+    ViewData["Title"] = "DoPayment";
+}
+
+@if (Model.Success)
+{
+    <iframe src="" width="1000" height="800">
+    </iframe>
+}
+else
+{
+    <span>@Model.Message</span>
+}
+

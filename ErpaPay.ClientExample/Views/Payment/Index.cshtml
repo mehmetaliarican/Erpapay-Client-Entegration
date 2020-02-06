@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Anasayfa";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Hoş geldiniz.</h1>
+    <p>Erpa pay örnek 3d ile ödeme entegrasyonu</a>.</p>
+    <form action="@Url.Action("DoPayment","Payment")" method="post">
+        <button id="btnDoPayment" class="btn btn-info">Ödeme yap</button>
+    </form>
+</div>
+

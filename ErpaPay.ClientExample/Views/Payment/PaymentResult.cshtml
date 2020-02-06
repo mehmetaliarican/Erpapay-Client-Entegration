@@ -1,0 +1,19 @@
+﻿@model ErpaPay.ClientExample.Models.CompleteResponseModel
+@{
+    ViewData["Title"] = "PaymentResult";
+}
+
+<div class="text-center">
+    @if (Model.Success)
+    {
+        <h3 class="text-success">
+            @Model.Message
+        </h3>
+    }
+    else
+    {
+        <h3 class="text-danger">
+            @Model.Message
+        </h3>
+    }
+</div>
