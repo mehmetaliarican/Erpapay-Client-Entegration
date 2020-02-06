@@ -3,13 +3,22 @@
     ViewData["Title"] = "DoPayment";
 }
 
-@if (Model.Success)
-{
-   <iframe src="@Model.Secure3dUrl" height="1000" width="100%">
-   </iframe>
-}
-else
-{
-    <span>@Model.Message</span>
-}
+<div class="container">
+    <div class="row">
+        @if (Model.Success)
+        {
+            string result;
+            using (var webCl = new System.Net.WebClient())
+            {
+                webCl.Encoding = System.Text.Encoding.UTF8;
+                result = webCl.DownloadString(Model.Secure3dUrl);
+            }
+            @Html.Raw(result)
+        }
+        else
+        {
+            <span>@Model.Message</span>
+        }
 
+    </div>
+</div>
